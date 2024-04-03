@@ -5,6 +5,7 @@ import { useSignUp } from "@clerk/clerk-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { toast } from "sonner";
 import { authSchema } from "@/lib/validations/auth";
 import { useRouter } from "next/navigation";
 import {
@@ -18,14 +19,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PasswordInput } from "@/components/password-input";
+import { showErrorToast } from "@/lib/handle-error";
 import { Icons } from "@/components/icons";
-import { useToast } from "@/components/ui/use-toast";
-import { getErrorMessage } from "@/lib/handle-error";
 
 type Inputs = z.infer<typeof authSchema>;
 
 export function SignUpForm() {
-  const { toast } = useToast();
   const router = useRouter();
   const { isLoaded, signUp } = useSignUp();
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -56,15 +55,11 @@ export function SignUpForm() {
 
       router.push("/signup/verify-email");
 
-      toast({
-        title: "Check your email",
+      toast.message("Check your email", {
         description: "We sent you a 6-digit verification code.",
       });
     } catch (err) {
-      toast({
-        title: getErrorMessage(err),
-        variant: "destructive",
-      });
+      showErrorToast(err);
     } finally {
       setLoading(false);
     }

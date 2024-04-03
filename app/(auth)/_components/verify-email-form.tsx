@@ -12,20 +12,25 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 import { Input } from "@/components/ui/input";
 import { Icons } from "@/components/icons";
-import { useToast } from "@/components/ui/use-toast";
-import { getErrorMessage } from "@/lib/handle-error";
+import { toast } from "sonner";
+import { showErrorToast } from "@/lib/handle-error";
 
 type Inputs = z.infer<typeof verifyEmailSchema>;
 
 export function VerifyEmailForm() {
-  const { toast } = useToast();
   const router = useRouter();
   const { isLoaded, signUp, setActive } = useSignUp();
   const [loading, setLoading] = React.useState(false);
@@ -58,10 +63,7 @@ export function VerifyEmailForm() {
         router.push(`${window.location.origin}/`);
       }
     } catch (err) {
-      toast({
-        title: getErrorMessage(err),
-        variant: "destructive",
-      });
+      showErrorToast(err);
     } finally {
       setLoading(false);
     }
@@ -77,15 +79,20 @@ export function VerifyEmailForm() {
             <FormItem>
               <FormLabel>Verification Code</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="169420"
-                  {...field}
-                  onChange={(e) => {
-                    e.target.value = e.target.value.trim();
-                    field.onChange(e);
-                  }}
-                />
+                <InputOTP maxLength={6} {...field}>
+                  <InputOTPGroup>
+                    <InputOTPSlot index={0} />
+                    <InputOTPSlot index={1} />
+                    <InputOTPSlot index={2} />
+                    <InputOTPSlot index={3} />
+                    <InputOTPSlot index={4} />
+                    <InputOTPSlot index={5} />
+                  </InputOTPGroup>
+                </InputOTP>
               </FormControl>
+              <FormDescription>
+                Please enter the Verification code sent to your email.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

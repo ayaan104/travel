@@ -16,7 +16,7 @@ export const verifyEmailSchema = z.object({
   code: z
     .string()
     .min(6, {
-      message: "Verification code must be 6 characters long",
+      message: "Your one-time password must be 6 characters.",
     })
     .max(6),
 });

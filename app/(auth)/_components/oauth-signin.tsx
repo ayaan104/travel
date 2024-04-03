@@ -5,8 +5,8 @@ import { useSignIn } from "@clerk/nextjs";
 import type { OAuthStrategy } from "@clerk/types";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
-import { useToast } from "@/components/ui/use-toast";
-import { getErrorMessage } from "@/lib/handle-error";
+import { toast } from "sonner";
+import { showErrorToast } from "@/lib/handle-error";
 
 const oauthProviders = [
   { name: "Google", strategy: "oauth_google", icon: "google" },
@@ -18,7 +18,6 @@ const oauthProviders = [
 }[];
 
 export default function OAuthSignIn() {
-  const { toast } = useToast();
   const [loading, setLoading] = React.useState<OAuthStrategy | null>(null);
   const { isLoaded: signInLoaded, signIn } = useSignIn();
 
@@ -32,10 +31,7 @@ export default function OAuthSignIn() {
         redirectUrlComplete: "/",
       });
     } catch (err) {
-      toast({
-        title: getErrorMessage(err),
-        variant: "destructive",
-      });
+      showErrorToast(err);
     } finally {
       setLoading(null);
     }

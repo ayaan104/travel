@@ -1,6 +1,7 @@
 import { isClerkAPIResponseError } from "@clerk/nextjs";
 import { z } from "zod";
 import { unknownError } from "@/lib/constants";
+import { toast } from "sonner";
 
 export function getErrorMessage(err: unknown) {
   if (err instanceof z.ZodError) {
@@ -11,8 +12,13 @@ export function getErrorMessage(err: unknown) {
   } else if (err instanceof Error) {
     return err.message;
   } else if (isClerkAPIResponseError(err)) {
-    return err.errors[0]?.longMessage ?? unknownError;
+    return err.errors[0].longMessage ?? unknownError;
   } else {
     return unknownError;
   }
+}
+
+export function showErrorToast(err: unknown) {
+  const errorMessage = getErrorMessage(err);
+  return toast.error(errorMessage);
 }
