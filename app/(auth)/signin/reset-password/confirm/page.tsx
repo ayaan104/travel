@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Shell } from "@/components/shell";
-import { ResetPasswordForm } from "@/app/(auth)/_components/reset-password-form";
+import { ResetPasswordConfirmForm } from "@/app/(auth)/_components/reset-password-confirm-form";
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   description: "Enter your email to reset your password",
 };
 
-export default function ResetPasswordPage() {
+export default function ResetPasswordConfirmPage() {
   return (
     <Shell className="max-w-lg">
       <Card>
@@ -28,7 +28,7 @@ export default function ResetPasswordPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ResetPasswordForm />
+          <ResetPasswordConfirmForm />
         </CardContent>
       </Card>
     </Shell>
