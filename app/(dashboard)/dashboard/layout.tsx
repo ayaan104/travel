@@ -2,19 +2,9 @@ import * as React from "react";
 import Link from "next/link";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { dashboardConfig } from "@/config/dashboard";
 
-import {
-  Bell,
-  CircleUser,
-  Home,
-  LineChart,
-  Menu,
-  Package,
-  Package2,
-  Search,
-  ShoppingCart,
-  Users,
-} from "lucide-react";
+import { Bell, Menu, Package2, Search } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -25,19 +15,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { UserAccountNav } from "@/components/account/user-account-nav";
 import DashboardNav from "@/components/navigation/nav";
 import DashboardMobileNav from "@/components/navigation/dashboard-mobile-nav";
+import { siteConfig } from "@/config/site";
+import { Icons } from "@/components/icons";
 
 type DashboardLayoutProps = React.PropsWithChildren;
 
@@ -56,8 +40,8 @@ export default async function DashboardLayout({
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-semibold">
-              <Package2 className="h-6 w-6" />
-              <span className="">Acme Inc</span>
+              <Icons.logo className="h-6 w-6" />
+              <span className="">{siteConfig.name}</span>
             </Link>
             <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
               <Bell className="h-4 w-4" />
@@ -65,7 +49,7 @@ export default async function DashboardLayout({
             </Button>
           </div>
           <div className="flex-1">
-            <DashboardNav />
+            <DashboardNav items={dashboardConfig.sidebarNav} />
           </div>
           <div className="mt-auto p-4">
             <Card>
@@ -99,7 +83,7 @@ export default async function DashboardLayout({
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col">
-              <DashboardMobileNav />
+              <DashboardMobileNav items={dashboardConfig.sidebarNav} />
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">

@@ -22,56 +22,51 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import { Icons } from "../icons";
+import { SidebarNavItem } from "@/types";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
-const DashboardMobileNav = () => {
+interface DashboardMobileNavProps {
+  items: SidebarNavItem[];
+}
+
+const DashboardMobileNav: React.FC<DashboardMobileNavProps> = ({ items }) => {
+  const path = usePathname();
+
+  if (!items?.length) {
+    return null;
+  }
+
   return (
     <>
       <nav className="grid gap-2 text-lg font-medium">
         <Link
           href="#"
-          className="flex items-center gap-2 text-lg font-semibold"
+          className="flex items-center gap-2 text-lg font-semibold mb-4"
         >
-          <Package2 className="h-6 w-6" />
+          <Icons.logo className="h-6 w-6" />
           <span className="sr-only">Acme Inc</span>
         </Link>
-        <Link
-          href="#"
-          className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-        >
-          <Home className="h-5 w-5" />
-          Dashboard
-        </Link>
-        <Link
-          href="#"
-          className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
-        >
-          <ShoppingCart className="h-5 w-5" />
-          Orders
-          <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-            6
-          </Badge>
-        </Link>
-        <Link
-          href="#"
-          className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-        >
-          <Package className="h-5 w-5" />
-          Products
-        </Link>
-        <Link
-          href="#"
-          className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-        >
-          <Users className="h-5 w-5" />
-          Customers
-        </Link>
-        <Link
-          href="#"
-          className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-        >
-          <LineChart className="h-5 w-5" />
-          Analytics
-        </Link>
+
+        {items.map((item, index) => {
+          const Icon = Icons[item.icon || "dashboard"];
+          return (
+            <Link
+              key={index}
+              href={item.href}
+              className={cn(
+                "mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 transition-all hover:text-primary",
+                path === item.href
+                  ? "bg-muted text-primary"
+                  : "text-muted-foreground",
+              )}
+            >
+              <Icon className="h-4 w-4" />
+              {item.title}
+            </Link>
+          );
+        })}
       </nav>
       <div className="mt-auto">
         <Card>

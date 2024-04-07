@@ -6,6 +6,9 @@ import {
   EyeOff,
   CircleUser,
   Sailboat,
+  Home,
+  Bookmark,
+  Package2,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -17,6 +20,9 @@ export const Icons = {
   eye: Eye,
   eyeOff: EyeOff,
   user: CircleUser,
+  dashboard: Home,
+  bookings: Bookmark,
+  package: Package2,
   gitHub: (props: IconProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path
