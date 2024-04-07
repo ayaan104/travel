@@ -8,11 +8,13 @@
     "start": "next start",
     "lint": "next lint",
     "format": "npx prettier . --write",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prisma:push": "dotenv -e .env.local -- npx prisma db push"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.10",
     "@hookform/resolvers": "^3.3.4",
+    "@prisma/client": "^5.12.1",
     "@radix-ui/react-aspect-ratio": "^1.0.3",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -22,6 +24,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "dotenv-cli": "^7.4.1",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.364.0",
     "next": "14.1.4",
@@ -46,6 +49,7 @@
     "lint-staged": "^15.2.2",
     "postcss": "^8",
     "prettier": "3.2.5",
+    "prisma": "^5.12.1",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
   }
