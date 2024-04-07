@@ -9,6 +9,10 @@ import {
   Home,
   Bookmark,
   Package2,
+  Bus,
+  TrainFront,
+  BedDouble,
+  Hotel,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -23,6 +27,10 @@ export const Icons = {
   dashboard: Home,
   bookings: Bookmark,
   package: Package2,
+  bus: Bus,
+  train: TrainFront,
+  hotel: Hotel,
+  room: BedDouble,
   gitHub: (props: IconProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path
