@@ -1,20 +1,22 @@
 import {
   LucideIcon,
-  Pizza,
   LucideProps,
   LoaderCircle,
   Eye,
   EyeOff,
+  CircleUser,
+  Sailboat,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
 export type IconProps = LucideProps;
 
 export const Icons = {
-  logo: Pizza,
+  logo: Sailboat,
   spinner: LoaderCircle,
   eye: Eye,
   eyeOff: EyeOff,
+  user: CircleUser,
   gitHub: (props: IconProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path
