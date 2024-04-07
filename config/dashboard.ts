@@ -9,32 +9,32 @@ export const dashboardConfig: DashboardConfig = {
     },
     {
       title: "Trains",
-      href: "/dashboard/trains",
+      href: "/dashboard/train",
       icon: "train",
     },
     {
       title: "Buses",
-      href: "/dashboard/buses",
+      href: "/dashboard/bus",
       icon: "bus",
     },
     {
       title: "Rooms",
-      href: "/dashboard/rooms",
+      href: "/dashboard/room",
       icon: "room",
     },
     {
       title: "Hotels",
-      href: "/dashboard/hotels",
+      href: "/dashboard/hotel",
       icon: "hotel",
     },
     {
       title: "Packages",
-      href: "/dashboard/packages",
+      href: "/dashboard/package",
       icon: "package",
     },
     {
       title: "Bookings",
-      href: "/dashboard/bookings",
+      href: "/dashboard/booking",
       icon: "bookings",
     },
   ],
