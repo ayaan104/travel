@@ -12,8 +12,8 @@ model Train {
   trainNumber   String    @unique
   source        String
   destination   String
-  departureTime DateTime
-  arrivalTime   DateTime
+  departureTime String
+  arrivalTime   String
   price         Float
   bookings      Booking[]
   createdAt     DateTime  @default(now()) @map(name: "created_at")
@@ -27,8 +27,8 @@ model Bus {
   busNumber     String    @unique
   source        String
   destination   String
-  departureTime DateTime
-  arrivalTime   DateTime
+  departureTime String
+  arrivalTime   String
   price         Float
   bookings      Booking[]
   createdAt     DateTime  @default(now()) @map(name: "created_at")
@@ -85,8 +85,8 @@ model Package {
   name        String
   description String
   price       Float
-  startDate   DateTime
-  endDate     DateTime
+  startDate   String
+  endDate     String
   bookings    Booking[]
   createdAt   DateTime  @default(now()) @map(name: "created_at")
   updatedAt   DateTime  @default(now()) @map(name: "updated_at")
