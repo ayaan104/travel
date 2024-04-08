@@ -1,6 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { TrainOprations } from "./oprations";
 
 export type Train = {
   id: string;
@@ -14,15 +15,32 @@ export type Train = {
 
 export const columns: ColumnDef<Train>[] = [
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "trainNumber",
+    header: "Train Number",
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "source",
+    header: "Source",
   },
   {
-    accessorKey: "amount",
-    header: "Amount",
+    accessorKey: "destination",
+    header: "Destination",
+  },
+  {
+    accessorKey: "arrivalTime",
+    header: "Arrival Time",
+  },
+  {
+    accessorKey: "departureTime",
+    header: "Departure Time",
+  },
+  {
+    accessorKey: "price",
+    header: "Price",
+  },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ({ row }) => <TrainOprations data={row.original} />,
   },
 ];

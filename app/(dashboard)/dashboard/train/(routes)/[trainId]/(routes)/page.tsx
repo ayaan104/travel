@@ -1,6 +1,8 @@
 import { DashboardHeader } from "@/components/header";
 import { TrainForm } from "../_components/form";
 import { db } from "@/lib/db";
+import { TrainDeleteButton } from "../_components/remove-button";
+import { Icons } from "@/components/icons";
 
 interface TrainPageProps {
   params: {
@@ -17,7 +19,13 @@ export default async function TrainPage({ params }: TrainPageProps) {
 
   return (
     <>
-      <DashboardHeader heading="Create Train"></DashboardHeader>
+      <DashboardHeader heading={`${train ? "Update" : "Create"} Train`}>
+        {train && (
+          <TrainDeleteButton variant="destructive" trainId={train.id}>
+            <Icons.trash />
+          </TrainDeleteButton>
+        )}
+      </DashboardHeader>
       <TrainForm train={train} />
     </>
   );

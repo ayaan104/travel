@@ -13,6 +13,9 @@ import {
   TrainFront,
   BedDouble,
   Hotel,
+  Ellipsis,
+  SquarePen,
+  Trash2,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -31,6 +34,9 @@ export const Icons = {
   train: TrainFront,
   hotel: Hotel,
   room: BedDouble,
+  more: Ellipsis,
+  edit: SquarePen,
+  trash: Trash2,
   gitHub: (props: IconProps) => (
     <svg viewBox="0 0 438.549 438.549" {...props}>
       <path

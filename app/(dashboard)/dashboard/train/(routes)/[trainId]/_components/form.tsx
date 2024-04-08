@@ -1,20 +1,23 @@
 "use client";
+import * as React from "react";
 import { Train } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { trainSchema } from "@/lib/validations/train";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import { Icons } from "@/components/icons";
 
 interface TrainFormProps {
   train: Train | null;
@@ -23,6 +26,9 @@ interface TrainFormProps {
 type Inputes = z.infer<typeof trainSchema>;
 
 export function TrainForm({ train }: TrainFormProps) {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
   const form = useForm<Inputes>({
     resolver: zodResolver(trainSchema),
     defaultValues: {
@@ -35,8 +41,41 @@ export function TrainForm({ train }: TrainFormProps) {
     },
   });
 
-  function onSubmit(values: Inputes) {
-    console.log(values);
+  const endpoint = train ? `/api/train/${train.id}` : "/api/train";
+  const method = train ? "PATCH" : "POST";
+  const message = train ? "update" : "create";
+
+  async function onSubmit(values: Inputes) {
+    setIsLoading(true);
+
+    const response = await fetch(endpoint, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
+    setIsLoading(false);
+
+    if (!response?.ok) {
+      return toast.error("Something went wrong.", {
+        description: `Your post was not ${message}. Please try again.`,
+      });
+    }
+
+    const train = await response.json();
+
+    // This forces a cache invalidation.
+    router.refresh();
+
+    form.reset();
+
+    router.push("/dashboard/train");
+
+    return toast.success(`train ${message} Successfully.`, {
+      description: `Your train was ${message} , refer dashboard for furthur updates`,
+    });
   }
 
   return (
@@ -50,7 +89,11 @@ export function TrainForm({ train }: TrainFormProps) {
               <FormItem>
                 <FormLabel>Train Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter train number" {...field} />
+                  <Input
+                    disabled={isLoading}
+                    placeholder="Enter train number"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -63,7 +106,11 @@ export function TrainForm({ train }: TrainFormProps) {
               <FormItem>
                 <FormLabel>Source</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter source station" {...field} />
+                  <Input
+                    disabled={isLoading}
+                    placeholder="Enter source station"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -76,7 +123,11 @@ export function TrainForm({ train }: TrainFormProps) {
               <FormItem>
                 <FormLabel>Destination</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter destination station" {...field} />
+                  <Input
+                    disabled={isLoading}
+                    placeholder="Enter destination station"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,7 +140,11 @@ export function TrainForm({ train }: TrainFormProps) {
               <FormItem>
                 <FormLabel>Departure Time</FormLabel>
                 <FormControl>
-                  <Input placeholder="dd/mm/yyyy" {...field} />
+                  <Input
+                    disabled={isLoading}
+                    placeholder="dd/mm/yyyy"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -102,7 +157,11 @@ export function TrainForm({ train }: TrainFormProps) {
               <FormItem>
                 <FormLabel>Arrival Time</FormLabel>
                 <FormControl>
-                  <Input placeholder="dd/mm/yyyy" {...field} />
+                  <Input
+                    disabled={isLoading}
+                    placeholder="dd/mm/yyyy"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -115,14 +174,25 @@ export function TrainForm({ train }: TrainFormProps) {
               <FormItem>
                 <FormLabel>Price</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter train price" {...field} />
+                  <Input
+                    disabled={isLoading}
+                    placeholder="Enter train price"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <Button type="submit">Submit</Button>
+        <Button disabled={isLoading} type="submit">
+          {isLoading ? (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <Icons.train className="mr-2 h-4 w-4" />
+          )}
+          {message} train
+        </Button>
       </form>
     </Form>
   );
