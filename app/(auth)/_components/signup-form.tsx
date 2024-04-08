@@ -59,6 +59,8 @@ export function SignUpForm() {
         description: "We sent you a 6-digit verification code.",
       });
     } catch (err) {
+      console.log(err);
+
       showErrorToast(err);
     } finally {
       setLoading(false);

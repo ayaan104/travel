@@ -62,3 +62,33 @@ export async function PATCH(
     return NextResponse.json({ error }, { status: 500 });
   }
 }
+
+export async function DELETE(
+  req: Request,
+  context: z.infer<typeof routeContextSchema>,
+) {
+  try {
+    // Ensure user is authentication and has access to this user.
+    const user = await currentUser();
+    if (!user) {
+      return NextResponse.json({ error: "unauthorize" }, { status: 403 });
+    }
+    // Validate the route context.
+    const { params } = routeContextSchema.parse(context);
+
+    // Delete the train
+    const dbDeleteTrain = await db.train.delete({
+      where: {
+        id: params.trainId,
+      },
+    });
+
+    if (!dbDeleteTrain) {
+      return NextResponse.json({ error: "train not deleted" }, { status: 500 });
+    }
+
+    return NextResponse.json(dbDeleteTrain, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
+  }
+}

@@ -11,7 +11,6 @@ import {
 import { OAuthSignIn } from "../_components/oauth-signin";
 import { SignUpForm } from "../_components/signup-form";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 import { Shell } from "@/components/shell";
 
 export const metadata: Metadata = {
